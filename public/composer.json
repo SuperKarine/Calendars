@@ -1,0 +1,27 @@
+{
+    "name": "michel/docker-project",
+    "description": "calendars",
+    "autoload": {
+        "psr-4": {
+            "Michel\\DockerProject\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "osezNoel"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4":{
+            "Router\\":"routes/"
+        }
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+        
+    }
+}

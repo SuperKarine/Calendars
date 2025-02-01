@@ -1,0 +1,70 @@
+services:
+  php-apache:
+    image: php:8.0-apache
+    build: 
+      context: ./public
+      dockerfile: Dockerfile
+    container_name: php-apache-projectCalendars
+    platform: linux/amd64
+    ports:
+      - "3003:80"  
+    volumes:
+        - ./public:/var/www/html
+
+    networks:
+      - mynetwork
+
+  mysql:
+    image: mysql:8
+    container_name: mysql-projectCalendars
+    platform: linux/amd64
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d 
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mynetwork
+
+    env_file: .env  
+
+  mongo:
+    image: mongo
+    container_name: mongo-projectCalendars
+    platform: linux/amd64
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - mynetwork
+
+  composer:
+    image: composer
+    container_name: composer-projectCalendars
+    platform: linux/amd64
+    
+    networks:
+      - mynetwork
+    working_dir: /var/www/html
+    volumes:
+    - ./public:/var/www/html
+    entrypoint: ["sh", "-c", "composer install && tail -f /dev/null"]
+
+networks:
+  mynetwork:
+    driver: bridge
+    
+
+volumes:
+  dbdata:
+  mongodata:
+  db_data:
+
+

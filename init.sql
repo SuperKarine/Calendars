@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS Calendars;
+USE Calendars;
+
+CREATE TABLE IF NOT EXISTS Users (
+    id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
+    nom     VARCHAR (255) NOT NULL,
+    prenom VARCHAR (255) NOT NULL,
+    username VARCHAR (255) NOT NULL,
+    mail VARCHAR (255) NOT NULL,
+    role VARCHAR (255) NOT NULL
+);
+
+
